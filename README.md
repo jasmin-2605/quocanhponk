@@ -89,15 +89,12 @@ main ()
 }
 
 
-
-
-
-//bai 3:
-
+//bai 3
 
 #include <stdio.h>
 #include <math.h>
-#define MAX 200
+#define MAX 100
+
 
 void nhapmt(int a[][MAX],int m,int n)
 {
@@ -110,18 +107,7 @@ void nhapmt(int a[][MAX],int m,int n)
 		}
 	}
 }
-void xuatmt(int a[][MAX],int m,int n)
-{
 
-	for(int i=0;i<m;i++)
-	{
-		for(int j=0;j<n;j++)
-		{
-			printf("%3d ",a[i][j]);
-		}
-		printf("\n");
-	}
-}
 int kt(int n)
 {
 	if(n > 1)
@@ -131,7 +117,7 @@ int kt(int n)
 	}
 	return 0;
 }
-void caua(int a[][MAX],int m,int n)
+int caua(int a[][MAX],int m,int n)
 {
 	int sum=0;
 	for(int i=0;i<m;i++)
@@ -145,9 +131,9 @@ void caua(int a[][MAX],int m,int n)
 		if(kt(a[0][j])==1) sum+= a[0][j];
 		if(kt(a[m-1][j])==1) sum+=a[m-1][j];
 	}
-	printf("%d",sum);
+return sum;
 }
-void caub(int a[][MAX],int m,int n)
+int caub(int a[][MAX],int m,int n)
 {
 	int sum[MAX]={0};
 	int t=0,counter=0;
@@ -160,20 +146,36 @@ void caub(int a[][MAX],int m,int n)
 		if(sum[t] % 2 ==0) counter++;
 		t++;
 	}
-	printf("%d",counter);
+	return counter;
 }
-main ()
+int main ()
 {
 	int a[MAX][MAX],m,n;
-	printf("\nnhap so dong,so cot ma tran:\n");
-	scanf("%d %d",&m,&n);
+	FILE *f;
+	printf("\nnhap so dong,so cot ma tran:\n");	
+    f=fopen("C:\\Users\\Admin\\Desktop\\table.inp.txt","wt");
+    if(f==NULL){
+    	printf("file khong ton tai");
+    	return 0;
+	}
+    scanf("%d %d",&m,&n);
+    fprintf(f,"%3d%3d \n",m,n);
     nhapmt(a,m,n);
-    printf("\nMa tran vua nhap:\n\n");
-    xuatmt(a,m,n);
-    printf("\n\na.Tong cac phan tu chinh phuong nam tren bien: ");
-    caua(a,m,n);
-    printf("\n\nb.So cot co tong la so chan: ");
-    caub(a,m,n);
-	
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        
+            fprintf(f,"%3d  ", a[i][j]);
+           
+        fprintf(f,"\n");
+    }
+    fclose(f);
+    
+    f=fopen("C:\\Users\\Admin\\Desktop\\table.out.txt","wt");
+    fprintf(f,"Cau a: %d\n",caua(a,m,n));
+    fprintf(f,"Cau b: %d\n",caub(a,m,n));
+    fclose(f);
+    
+    
 	
 }
